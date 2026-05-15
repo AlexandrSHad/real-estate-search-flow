@@ -1,0 +1,1018 @@
+<h2 class="sr-only">
+  Sreality.cz API field reference — interactive guide to property listing data
+  structure
+</h2>
+
+<style>
+  :root {
+    --tab-active: var(--color-text-primary);
+  }
+  body {
+    background: #272727;
+    color: white;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 8px 4px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-text-primary);
+    font-weight: 500;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .field-row:last-child {
+    border-bottom: none;
+  }
+  .field-key {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #185fa5;
+    padding: 10px 12px;
+    background: var(--color-background-secondary);
+    border-right: 0.5px solid var(--color-border-tertiary);
+    word-break: break-all;
+  }
+  .field-desc {
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .field-type {
+    display: inline-block;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .field-example {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-family: var(--font-mono);
+    margin-top: 3px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .badge-new {
+    background: #eaf3de;
+    color: #3b6d11;
+  }
+  .badge-rent {
+    background: #e6f1fb;
+    color: #185fa5;
+  }
+  .badge-sale {
+    background: #faeeda;
+    color: #854f0b;
+  }
+  .prop-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+  }
+  .prop-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: var(--color-background-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+  }
+  .prop-body {
+    padding: 12px 14px;
+  }
+  .val-pill {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+    display: inline-block;
+    margin: 2px;
+  }
+</style>
+
+<div style="padding: 1rem 0 0.5rem">
+  <div
+    style="
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    "
+  >
+    <div style="font-size: 15px; font-weight: 500">
+      Sreality.cz listing API — field reference
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap">
+      <span
+        style="
+          font-size: 12px;
+          background: var(--color-background-secondary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: 4px;
+          padding: 2px 8px;
+          color: var(--color-text-secondary);
+        "
+        ><i class="ti ti-home" aria-hidden="true"></i> 5 624 listings in
+        sample</span
+      >
+      <span
+        style="
+          font-size: 12px;
+          background: var(--color-background-secondary);
+          border: 0.5px solid var(--color-border-tertiary);
+          border-radius: 4px;
+          padding: 2px 8px;
+          color: var(--color-text-secondary);
+        "
+        >22 results per page</span
+      >
+    </div>
+  </div>
+
+  <div
+    style="
+      display: flex;
+      gap: 20px;
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+    "
+  >
+    <button class="tab-btn active" onclick="showTab('core', this)">
+      <i
+        class="ti ti-building"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Core
+    </button>
+    <button class="tab-btn" onclick="showTab('price', this)">
+      <i
+        class="ti ti-currency-koruna"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Pricing
+    </button>
+    <button class="tab-btn" onclick="showTab('location', this)">
+      <i
+        class="ti ti-map-pin"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Location
+    </button>
+    <button class="tab-btn" onclick="showTab('media', this)">
+      <i
+        class="ti ti-photo"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Media
+    </button>
+    <button class="tab-btn" onclick="showTab('agency', this)">
+      <i
+        class="ti ti-briefcase"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Agency
+    </button>
+    <button class="tab-btn" onclick="showTab('pagination', this)">
+      <i
+        class="ti ti-list"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Pagination
+    </button>
+    <button class="tab-btn" onclick="showTab('preview', this)">
+      <i
+        class="ti ti-eye"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Preview
+    </button>
+  </div>
+
+  <div id="tab-core">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      "
+    >
+      Each item in <code style="font-size: 11px">results[]</code> — the core
+      property identification and classification fields.
+    </div>
+    <div
+      style="
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      "
+    >
+      <div class="field-row">
+        <div class="field-key">id</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Unique listing ID. Used to
+          construct the detail URL:
+          <span style="font-family: var(--font-mono); font-size: 11px"
+            >sreality.cz/detail/…/{id}</span
+          >
+          <div class="field-example">e.g. 3993514828</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">name</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Auto-generated listing title —
+          offer type + property type + area + land size.
+          <div class="field-example">
+            "Prodej rodinného domu 190 m², pozemek 995 m²"
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">categoryMainCb</div>
+        <div class="field-desc">
+          <span class="field-type">object</span> Main property category.
+          <code style="font-size: 11px">{name, value}</code><br /><span
+            class="val-pill"
+            >1 = Byty (Flats)</span
+          ><span class="val-pill">2 = Domy (Houses)</span
+          ><span class="val-pill">3 = Pozemky (Land)</span
+          ><span class="val-pill">4 = Komerční (Commercial)</span
+          ><span class="val-pill">5 = Ostatní (Other)</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">categorySubCb</div>
+        <div class="field-desc">
+          <span class="field-type">object</span> Sub-category within the main
+          type. <code style="font-size: 11px">{name, value}</code><br /><span
+            class="val-pill"
+            >33 = Chata (Cottage)</span
+          ><span class="val-pill">37 = Rodinný (Family house)</span
+          ><span class="val-pill">39 = Vila (Villa)</span
+          ><span class="val-pill">54 = Vícegenerační (Multi-gen)</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">categoryTypeCb</div>
+        <div class="field-desc">
+          <span class="field-type">object</span> Offer type.
+          <code style="font-size: 11px">{name, value}</code><br /><span
+            class="badge badge-sale"
+            >1 = Prodej (Sale)</span
+          ><span class="badge badge-rent">2 = Pronájem (Rent)</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">discountShow</div>
+        <div class="field-desc">
+          <span class="field-type">boolean</span> Show a price-reduction badge
+          on the listing card. <code style="font-size: 11px">true</code> = price
+          was lowered recently.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">watchdogBadge</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Badge for saved-search
+          (watchdog) subscribers.<br /><span class="val-pill">none</span
+          ><span class="badge badge-new">new</span> = first seen
+          <span class="val-pill">update</span> = price/data changed
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">hasMatterport</div>
+        <div class="field-desc">
+          <span class="field-type">boolean</span> Listing includes a 3D virtual
+          tour (Matterport).
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">hasVideo</div>
+        <div class="field-desc">
+          <span class="field-type">boolean</span> Listing includes a video
+          walkthrough.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-price" style="display: none">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      "
+    >
+      All monetary values are in CZK. A value of
+      <code style="font-size: 11px">0</code> means "price on request" (cena na
+      vyžádání).
+    </div>
+    <div
+      style="
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      "
+    >
+      <div class="field-row">
+        <div class="field-key">priceCzk</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Total price in CZK. For
+          rentals, this is the monthly rent. Zero = price on request.
+          <div class="field-example">e.g. 6500000 → 6 500 000 Kč</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">priceCzkPerSqM</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Price per m² in CZK, derived
+          from total price ÷ usable area. Useful for quick cross-listing
+          comparisons. Zero = price on request.
+          <div class="field-example">e.g. 34211 → 34 211 Kč/m²</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">priceSummaryCzk</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Summary display price.
+          Typically identical to
+          <code style="font-size: 11px">priceCzk</code> but may differ for
+          multi-unit developer projects.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">priceUnitCb</div>
+        <div class="field-desc">
+          <span class="field-type">object</span> Price unit for
+          <code style="font-size: 11px">priceCzk</code>.
+          <code style="font-size: 11px">{name, value}</code><br /><span
+            class="val-pill"
+            >1 = za nemovitost (total / per property)</span
+          ><span class="val-pill">2 = za měsíc (per month)</span
+          ><span class="val-pill">7 = za den (per day)</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">priceSummaryUnitCb</div>
+        <div class="field-desc">
+          <span class="field-type">object</span> Same structure as
+          <code style="font-size: 11px">priceUnitCb</code>. Typically identical
+          — the summary unit for the display price.
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        font-size: 12px;
+        color: var(--color-text-secondary);
+      "
+    >
+      <i
+        class="ti ti-info-circle"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Area figures (m²) are <em>not</em> present in the listing index — only in
+      the full detail endpoint. The
+      <code style="font-size: 11px">name</code> field string contains them in
+      human-readable form.
+    </div>
+  </div>
+
+  <div id="tab-location" style="display: none">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      "
+    >
+      All location data lives in <code style="font-size: 11px">locality</code> —
+      a nested object with Czech administrative hierarchy and GPS coordinates.
+    </div>
+    <div
+      style="
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      "
+    >
+      <div class="field-row">
+        <div class="field-key">locality.latitude<br />locality.longitude</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> GPS coordinates. Precision
+          depends on <code style="font-size: 11px">inaccuracyType</code> — may
+          be exact or approximate.
+          <div class="field-example">e.g. 49.808099, 15.404764</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.inaccuracyType</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> How precise the listed GPS
+          point is.<br /><span class="val-pill">address</span> = exact building
+          <span class="val-pill">gps</span> = GPS only, no address
+          <span class="val-pill">street</span> = street-level
+          <span class="val-pill">ward</span> = neighbourhood/area only
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.city</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> City or municipality. For
+          Prague, always "Praha".
+          <div class="field-example">e.g. "Vlkaneč", "Praha", "Kladno"</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.cityPart</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Sub-area within the city
+          (district or borough). For Prague, this is the named neighbourhood.
+          <div class="field-example">e.g. "Záběhlice", "Nebušice", "Vinoř"</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.district</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Czech administrative district
+          (okres). Prague has inner districts like "Praha 4", "Praha 6".
+          Regional districts e.g. "Praha-západ", "Kladno".
+          <div class="field-example">
+            e.g. "Praha-východ", "Benešov", "Praha 4"
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.region</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Czech administrative region
+          (kraj).
+          <div class="field-example">
+            "Hlavní město Praha" or "Středočeský kraj"
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">
+          locality.street<br />locality.streetNumber<br />locality.houseNumber
+        </div>
+        <div class="field-desc">
+          <span class="field-type">string | null</span> Street name, descriptive
+          number (č.p.), and orientation number. Often null when
+          <code style="font-size: 11px">inaccuracyType</code> is not "address".
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.quarter<br />locality.ward</div>
+        <div class="field-desc">
+          <span class="field-type">string | null</span> Finer administrative
+          subdivisions used mainly within Prague (<code style="font-size: 11px"
+            >quarter</code
+          >
+          = Praha X area). <code style="font-size: 11px">ward</code> is rarely
+          populated.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.zip</div>
+        <div class="field-desc">
+          <span class="field-type">string | null</span> Postal code. Frequently
+          null in the listing index — available on the detail endpoint.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.geoHash</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Geohash encoding of
+          coordinates. Useful for spatial proximity queries and clustering
+          without a full geo database.
+          <div class="field-example">e.g. "u2fgqe33jn" (≈ 38m precision)</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.entityType</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> The geographic entity this
+          locality record describes: <span class="val-pill">address</span
+          ><span class="val-pill">street</span><span class="val-pill">ward</span
+          ><span class="val-pill">municipality</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.*Id fields</div>
+        <div class="field-desc">
+          <span class="field-type">number | null</span> Numeric IDs for city,
+          district, region, etc. (<code style="font-size: 11px"
+            >municipalityId</code
+          >, <code style="font-size: 11px">districtId</code>,
+          <code style="font-size: 11px">regionId</code>…). Use these for
+          filtering API requests — more reliable than string names.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">locality.*SeoName fields</div>
+        <div class="field-desc">
+          <span class="field-type">string | null</span> URL-safe slugs for each
+          geographic level. Used to build search URLs:
+          <code style="font-size: 11px"
+            >/hledani/domy/{citySeoName},{regionSeoName}</code
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-media" style="display: none">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      "
+    >
+      The <code style="font-size: 11px">images[]</code> array — each listing
+      returns 5–40+ images with room-type classification codes.
+    </div>
+    <div
+      style="
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      "
+    >
+      <div class="field-row">
+        <div class="field-key">images[].url</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Relative URL — prepend
+          <code style="font-size: 11px">https:</code> to use. CDN path includes
+          size/quality params.
+          <div class="field-example">
+            e.g.
+            <code style="font-size: 11px"
+              >https://d18-a.sdn.cz/d_18/…/9fe9.jpeg</code
+            >
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">images[].restbType</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Room/photo type code. Allows
+          filtering by room before fetching the full detail.<br />
+          <span class="val-pill">0 = interior</span
+          ><span class="val-pill">1 = kitchen</span
+          ><span class="val-pill">4 = bedroom</span
+          ><span class="val-pill">5 = exterior/facade</span
+          ><span class="val-pill">6 = garden</span
+          ><span class="val-pill">8 = bathroom</span
+          ><span class="val-pill">10 = storage/utility</span
+          ><span class="val-pill">11 = garage</span
+          ><span class="val-pill">12 = attic</span
+          ><span class="val-pill">15 = ground floor plan</span
+          ><span class="val-pill">16 = upper floor plan</span
+          ><span class="val-pill">17 = aerial/drone</span
+          ><span class="val-pill">19 = aerial photo</span
+          ><span class="val-pill">22 = living area</span
+          ><span class="val-pill">26 = land/plot</span
+          ><span class="val-pill">29 = property exterior</span
+          ><span class="val-pill">30 = neighbourhood</span>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">images[].order</div>
+        <div class="field-desc">
+          <span class="field-type">number | null</span> Display order override.
+          When <code style="font-size: 11px">null</code>, use array index order.
+          A non-null value means the seller or agent manually reordered the
+          gallery.
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        font-size: 12px;
+        color: var(--color-text-secondary);
+      "
+    >
+      <i
+        class="ti ti-info-circle"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      The first image (<code style="font-size: 11px">images[0]</code>) is always
+      the hero/thumbnail. The sreality CDN supports image resizing via URL path
+      params — the <code style="font-size: 11px">c_img_qB_C</code> segment
+      encodes crop and quality.
+    </div>
+  </div>
+
+  <div id="tab-agency" style="display: none">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      "
+    >
+      Agency/seller info is split between the
+      <code style="font-size: 11px">premise</code> object and top-level
+      <code style="font-size: 11px">premiseId</code> /
+      <code style="font-size: 11px">premiseLogo</code> fields.
+    </div>
+    <div
+      style="
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      "
+    >
+      <div class="field-row">
+        <div class="field-key">premiseId</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Unique agency ID. Use to fetch
+          all listings by a specific agency or to deduplicate cross-portal
+          listings.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">premiseLogo</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Agency logo URL. An
+          <strong>empty string</strong>
+          <code style="font-size: 11px">""</code> means the listing is from a
+          private seller (no agent), which is common on Bezrealitky cross-listed
+          entries.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">premise.seoName</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Agency slug — used to link to
+          the agency's page on sreality.
+          <div class="field-example">
+            e.g. "soukup-partners-s-r-o", "engel-volkers"
+          </div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">
+          premise.citySeoName<br />premise.wardSeoName<br />premise.quarterSeoName
+        </div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Location of the agency office —
+          not the property. Useful only for building the agency profile link.
+          <div class="field-example">
+            e.g. the property is in Vlkaneč but the agency office is in "kolin"
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-pagination" style="display: none">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 8px;
+      "
+    >
+      Top-level pagination envelope and search metadata returned alongside
+      <code style="font-size: 11px">results[]</code>.
+    </div>
+    <div
+      style="
+        border: 0.5px solid var(--color-border-tertiary);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      "
+    >
+      <div class="field-row">
+        <div class="field-key">pagination.total</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Total listings matching the
+          search query — excluding promotional/sponsored slots.
+          <div class="field-example">e.g. 5624</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">pagination.totalWithPromo</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Total including
+          promoted/boosted listings injected into the results stream.
+          <div class="field-example">e.g. 5892 (+268 promo)</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">pagination.limit</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Results per page. Typically 20
+          or 22. Controllable via
+          <code style="font-size: 11px">per_page</code> query param.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">pagination.offset</div>
+        <div class="field-desc">
+          <span class="field-type">number</span> Current page offset (how many
+          items skipped).
+          <code style="font-size: 11px">offset = page × limit</code>.
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">searchTitle</div>
+        <div class="field-desc">
+          <span class="field-type">string</span> Human-readable summary of the
+          active search.
+          <div class="field-example">"Domy Praha, Středočeský kraj"</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">timestamp</div>
+        <div class="field-desc">
+          <span class="field-type">ISO string</span> When the response was
+          generated. Use for cache invalidation and change detection in your
+          scraper.
+          <div class="field-example">"2026-05-14T21:44:07.346Z"</div>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-key">regionTip / projectTip<br />/ brokerTip</div>
+        <div class="field-desc">
+          <span class="field-type">object | null</span> Editorially-selected
+          promoted listings injected alongside the main results. Structurally
+          identical to a normal result. Flag or skip these in your scraper —
+          they may not match your search criteria.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-preview" style="display: none">
+    <div
+      style="
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-bottom: 12px;
+      "
+    >
+      Reconstructed listing card from real sample data — hover a field to see
+      the source key.
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px">
+      <div class="prop-card">
+        <img
+          src="https://d18-a.sdn.cz/d_18/c_img_qA_E/kcHp2YdDtEDuRmS5Gd4c5U/e0a0.jpeg"
+          style="width: 100%; height: 160px; object-fit: cover"
+          alt="Property exterior"
+          onerror="this.style.display = 'none'"
+        />
+        <div class="prop-body">
+          <div
+            style="display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap"
+          >
+            <span
+              style="
+                font-size: 11px;
+                background: #faeeda;
+                color: #854f0b;
+                padding: 2px 8px;
+                border-radius: 4px;
+              "
+              >Prodej</span
+            >
+            <span
+              style="
+                font-size: 11px;
+                background: var(--color-background-secondary);
+                color: var(--color-text-secondary);
+                padding: 2px 8px;
+                border-radius: 4px;
+                border: 0.5px solid var(--color-border-tertiary);
+              "
+              >Rodinný dům</span
+            >
+          </div>
+          <div
+            style="
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 1.4;
+              margin-bottom: 6px;
+            "
+          >
+            Prodej rodinného domu 190 m², pozemek 995 m²
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: var(--color-text-secondary);
+              margin-bottom: 10px;
+            "
+          >
+            <i
+              class="ti ti-map-pin"
+              style="font-size: 13px; vertical-align: -1px"
+              aria-hidden="true"
+            ></i>
+            Vlkaneč, Kutná Hora, Středočeský kraj
+          </div>
+          <div style="font-size: 18px; font-weight: 500; margin-bottom: 4px">
+            6 500 000 Kč
+          </div>
+          <div style="font-size: 12px; color: var(--color-text-secondary)">
+            34 211 Kč/m²
+          </div>
+          <div
+            style="
+              margin-top: 10px;
+              padding-top: 10px;
+              border-top: 0.5px solid var(--color-border-tertiary);
+              font-size: 12px;
+              color: var(--color-text-secondary);
+            "
+          >
+            <i
+              class="ti ti-building-store"
+              style="font-size: 13px; vertical-align: -1px"
+              aria-hidden="true"
+            ></i>
+            RE/MAX G8 Reality, Kolín —
+            <span style="font-family: var(--font-mono)">premiseId: 36358</span>
+          </div>
+        </div>
+      </div>
+      <div class="prop-card">
+        <img
+          src="https://d18-a.sdn.cz/d_18/c_img_qB_B/nCTUX1iX5bIUBBSmbGl99ow/fc34.jpeg"
+          style="width: 100%; height: 160px; object-fit: cover"
+          alt="Property exterior"
+          onerror="this.style.display = 'none'"
+        />
+        <div class="prop-body">
+          <div
+            style="display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap"
+          >
+            <span
+              style="
+                font-size: 11px;
+                background: #e6f1fb;
+                color: #185fa5;
+                padding: 2px 8px;
+                border-radius: 4px;
+              "
+              >Pronájem</span
+            >
+            <span
+              style="
+                font-size: 11px;
+                background: var(--color-background-secondary);
+                color: var(--color-text-secondary);
+                padding: 2px 8px;
+                border-radius: 4px;
+                border: 0.5px solid var(--color-border-tertiary);
+              "
+              >Rodinný dům</span
+            >
+          </div>
+          <div
+            style="
+              font-size: 14px;
+              font-weight: 500;
+              line-height: 1.4;
+              margin-bottom: 6px;
+            "
+          >
+            Pronájem rodinného domu 193 m², pozemek 468 m²
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: var(--color-text-secondary);
+              margin-bottom: 10px;
+            "
+          >
+            <i
+              class="ti ti-map-pin"
+              style="font-size: 13px; vertical-align: -1px"
+              aria-hidden="true"
+            ></i>
+            Bašť, Praha-východ, Středočeský kraj
+          </div>
+          <div style="font-size: 18px; font-weight: 500; margin-bottom: 4px">
+            70 000 Kč/měsíc
+          </div>
+          <div style="font-size: 12px; color: var(--color-text-secondary)">
+            363 Kč/m²
+          </div>
+          <div
+            style="
+              margin-top: 10px;
+              padding-top: 10px;
+              border-top: 0.5px solid var(--color-border-tertiary);
+              font-size: 12px;
+              color: var(--color-text-secondary);
+            "
+          >
+            <i
+              class="ti ti-building-store"
+              style="font-size: 13px; vertical-align: -1px"
+              aria-hidden="true"
+            ></i>
+            Soukup Partners s.r.o., Praha —
+            <span style="font-family: var(--font-mono)">premiseId: 4744</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style="
+        margin-top: 14px;
+        padding: 10px 14px;
+        background: var(--color-background-secondary);
+        border-radius: var(--border-radius-md);
+        font-size: 12px;
+        color: var(--color-text-secondary);
+      "
+    >
+      <i
+        class="ti ti-info-circle"
+        style="font-size: 14px; vertical-align: -2px"
+        aria-hidden="true"
+      ></i>
+      Note: <code style="font-size: 11px">inaccuracyType: "address"</code> on
+      the Bašť listing means GPS is exact. The Vlkaneč listing has
+      <code style="font-size: 11px">inaccuracyType: "gps"</code> — coordinates
+      are present but no street address is exposed in the index.
+    </div>
+  </div>
+</div>
+
+<script>
+  function showTab(name, btn) {
+    [
+      "core",
+      "price",
+      "location",
+      "media",
+      "agency",
+      "pagination",
+      "preview",
+    ].forEach((t) => {
+      document.getElementById("tab-" + t).style.display =
+        t === name ? "block" : "none";
+    });
+    document
+      .querySelectorAll(".tab-btn")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+  }
+</script>
