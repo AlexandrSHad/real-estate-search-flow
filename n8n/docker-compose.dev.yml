@@ -1,0 +1,23 @@
+# =============================================================================
+# Dev overrides — Windows local development
+#
+# Production (Portainer on Pi): docker compose up
+# Dev (Windows):
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#   Or set COMPOSE_FILE=docker-compose.yml;docker-compose.dev.yml in local .env  (Windows uses ; not :)
+#   and use plain: docker compose up
+# =============================================================================
+
+name: real-estate-search-flow
+
+services:
+
+  postgres:
+    ports:
+      - "5433:5432"  # offset to avoid conflict if local Postgres runs on 5432
+    restart: "no"
+
+  n8n:
+    environment:
+      N8N_BASIC_AUTH_ACTIVE: "false"  # skip login on local dev
+    restart: "no"
