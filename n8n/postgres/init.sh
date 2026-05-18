@@ -17,7 +17,9 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
 
     -- Each user can only reach its own database
     GRANT CONNECT ON DATABASE "$N8N_DB" TO "$N8N_DB_USER";
+    GRANT CREATE ON DATABASE "$N8N_DB" TO "$N8N_DB_USER";
     GRANT CONNECT ON DATABASE "$REALESTATE_DB" TO "$REALESTATE_DB_USER";
+    GRANT CREATE ON DATABASE "$REALESTATE_DB" TO "$REALESTATE_DB_USER";
 EOSQL
 
 # Schema-level grants require a separate connection to each database
