@@ -1,10 +1,17 @@
 # Phased Roadmap
 
+Legend:
+
+- [x] - task is done
+- [*] - task is in progress
+
 ## Phase 1 — Core agent (current)
 
-- Scrape sreality.cz and bezrealitky.cz via plain HTTP
-- Detect new listings and price changes via Postgres comparison
-- Send Telegram notifications
+- [x] Scrape sreality.cz and bezrealitky.cz via plain HTTP
+- [x] Send Telegram notifications
+- [*] Deploy n8n infrastructure to the Raspberry Pi
+- [ ] Deploy n8n workflow to the Raspberry Pi instance
+- [ ] Detect new listings and price changes via Postgres comparison
 
 ## Phase 2 — AI validation
 
