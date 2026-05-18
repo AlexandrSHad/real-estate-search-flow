@@ -31,3 +31,7 @@ Legend:
 - Cross-site deduplication (same property listed on multiple portals)
 - VueJS or ASP.NET Core UI for browsing saved properties
 - User notes, accept/reject workflow (via UI or Telegram inline buttons)
+
+## Phase X (not yet defined)
+
+- Replace `N8N_SECURE_COOKIE=false` workaround with a self-signed TLS certificate mounted into the n8n container — see `n8n-https-setup.md`
