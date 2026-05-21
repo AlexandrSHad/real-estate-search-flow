@@ -1,6 +1,8 @@
 # Portainer Stack Setup
 
-WARNING: This approach did not work. The init script for postgress did not run, because Portainer stack only operates on the compose file itself, and any relative bind-mounts (e.g. `./postgres/init.sh`) resolve to a missing path. Docker silently creates a directory there instead of a file. The scrips is never executed.
+IMPORTANT:
+This project already migrated to Komodo.
+Portainer approach did not work. The init script for postgress did not run, because Portainer stack only operates on the compose file itself, and any relative bind-mounts (e.g. `./postgres/init.sh`) resolve to a missing path. Docker silently creates a directory there instead of a file. The scrips is never executed.
 
 ## Deploying from Git repository
 

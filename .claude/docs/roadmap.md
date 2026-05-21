@@ -35,3 +35,4 @@ Legend:
 ## Phase X (not yet defined)
 
 - Replace `N8N_SECURE_COOKIE=false` workaround with a self-signed TLS certificate mounted into the n8n container — see `n8n-https-setup.md`
+- Enable key rotation for Komodo, Decision: Disable automatic PKI key rotation in Komodo. Reason: Known bug — rotation closes the WebSocket connection but Core fails to persist the new Periphery public key before rejecting the reconnect attempt. Stack recreation required to recover. Will re-enable if/when fixed upstream.
